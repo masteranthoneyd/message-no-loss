@@ -1,0 +1,33 @@
+spring:
+  rabbitmq:
+    addresses: 127.0.0.1:5672
+    username: rabbitmq
+    password: rabbitmq
+    virtual-host: /
+    connection-timeout: 15000
+
+    ## 生产者配置
+    # 消息到达 exchange ack
+    publisher-confirm-type: correlated
+    # 消息被路由到队列 ack
+    publisher-returns: true
+    template:
+      # 必须开启这个才会触发 return callback
+      mandatory: true
+      retry:
+        enabled: true
+        max-attempts: 2
+        initial-interval: 2000ms
+
+    ## 消费端配置
+    listener:
+      simple:
+        #消费端
+        concurrency: 1
+        #最大消费端数
+        max-concurrency: 1
+        #自动签收auto  手动 manual
+        acknowledge-mode: manual
+        #限流（海量数据，同时只能过来一条）
+        prefetch: 1
+client-id: ${spring.application.name}
