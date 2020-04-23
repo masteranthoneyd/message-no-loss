@@ -1,0 +1,6 @@
+messaging:
+  mqType: rabbit
+  topics:
+    - name: test-topic
+      properties:
+        delayed: true

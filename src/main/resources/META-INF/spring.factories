@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yangbingdong.messagenoloss.config.MessagingConfiguration,\
   com.yangbingdong.messagenoloss.rabbitmq.config.RabbitMqConfiguration,\
   com.yangbingdong.messagenoloss.kafka.config.KafkaConfiguration,\
   com.yangbingdong.messagenoloss.kafka.config.KafkaTopicCreator

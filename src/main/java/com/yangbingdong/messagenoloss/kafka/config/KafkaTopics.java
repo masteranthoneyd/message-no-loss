@@ -3,7 +3,6 @@ package com.yangbingdong.messagenoloss.kafka.config;
 import lombok.Data;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
@@ -12,8 +11,6 @@ import java.util.List;
  * @date 2020/4/13
  * @contact yangbingdong1994@gmail.com
  */
-
-@Configuration
 @ConfigurationProperties(prefix = "kafka")
 @Data
 class KafkaTopics {
@@ -28,6 +25,5 @@ class KafkaTopics {
         NewTopic toNewTopic() {
             return new NewTopic(this.name, this.numPartitions, this.replicationFactor);
         }
-
     }
 }

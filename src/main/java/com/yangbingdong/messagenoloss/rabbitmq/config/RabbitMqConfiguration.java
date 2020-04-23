@@ -6,6 +6,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -40,6 +41,11 @@ public class RabbitMqConfiguration {
         return new Jackson2JsonMessageConverter();
     }
 
+    @Bean
+    public RabbitContainerCustomizer rabbitContainerCustomizer() {
+        return new RabbitContainerCustomizer();
+    }
+
     @Bean(name = "rabbitListenerContainerFactory")
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(
             SimpleRabbitListenerContainerFactoryConfigurer configurer,
@@ -48,6 +54,7 @@ public class RabbitMqConfiguration {
         // factory.setTaskExecutor(createRabbitThreadTaskExecutor());
         configurer.configure(factory, connectionFactory);
         factory.setMessageConverter(jackson2JsonMessageConverter());
+        factory.setContainerCustomizer(rabbitContainerCustomizer());
         return factory;
     }
 
@@ -100,6 +107,11 @@ public class RabbitMqConfiguration {
             }
         });
         return template;
+    }
+
+    @Bean
+    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+        return new RabbitAdmin(connectionFactory);
     }
 
     private boolean determineMandatoryFlag(RabbitProperties properties) {

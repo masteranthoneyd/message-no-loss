@@ -12,7 +12,7 @@ import org.springframework.kafka.support.ProducerListener;
  * @contact yangbingdong1994@gmail.com
  */
 @PropertySource(factory = YamlPropertySourceFactory.class, value = "classpath:MQ-CONF/kafka.yml")
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class KafkaConfiguration {
 
     @Bean
